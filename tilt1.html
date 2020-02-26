@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title> tilt </title>
+  <title> local </title>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <style>
@@ -253,17 +253,17 @@ tween=(function(){
     var threshold=50;
     var transitioning=false;
     var counts=0;
-    var during=50;
+    var during=80;
     var tweening=0;
     var timer;
     var processing=false;
     function handleOrientation(e){
       var gamma=e.gamma;//[-90, 90]
       var beta=e.beta;//[-180, 180]
-      if(processing)return
-      processing=true;
-      setTimeout(function(){
-        processing=false;
+      //if(processing)return
+      //processing=true;
+      //setTimeout(function(){
+        //processing=false;
         if(tweening)return;
         if(Math.abs(gamma)>20){
           tweening=1;
@@ -286,7 +286,7 @@ tween=(function(){
           return;
         }
 
-        if(beta-90<-20){
+        if(beta-90<-10){
           counts=0;
           tweening=1;
           if(startPos.y==0){
@@ -305,7 +305,7 @@ tween=(function(){
           }
           endPos.y-=3.2;
         }
-      },200)
+      //},200)
     }
     window.addEventListener('deviceorientation', handleOrientation);
     function moving(){
