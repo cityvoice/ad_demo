@@ -22,18 +22,18 @@
   .container{width:6.4rem;height:3.2rem;position:relative;}
   .left{position:absolute;left:0;top:0;width:0.4rem;height:100%;background:blue;z-index:1}
   .right{position:absolute;left:0.4rem;top:0;width:6rem;height:3.2rem;overflow:hidden}
-  .wrap{width:18rem;height:6.4rem;transform:translate3d(-6rem,-3.2rem,0);transition:transform 0.5s ease-out;}
+  .wrap{width:18rem;height:6.4rem;transform:translate3d(-6rem,-3.2rem,0);-webkit-transform:translate3d(-6rem,-3.2rem,0);transition:transform 1s ease-out;-webkit-transition:-webkit-transform 1s ease-out;}
   .row{width:18rem;height:3.2rem;}
   .row>div{width:6rem;height:3.2rem;display:inline-block;background-size:100%}
-  .a1{background:blue}
-  .b1{background:gray}
-  .c1{background:green}
-  .a2{background:#ccc}
-  .b2{background:skyblue}
-  .c2{background:#ccc}
-  .a3{background:blue}
-  .b3{background:gray}
-  .c3{background:green}
+  .a1{background:url(https://t12.baidu.com/it/u=721497938,2484151604&fm=76) no-repeat}
+  .b1{background:url(https://t12.baidu.com/it/u=258330515,4053316423&fm=76) no-repeat}
+  .c1{background:url(https://t11.baidu.com/it/u=181418956,1818712927&fm=76) no-repeat}
+  .a2{background:url(https://f11.baidu.com/it/u=522930220,3719454270&fm=76) no-repeat}
+  .b2{background:url(https://f11.baidu.com/it/u=1982326384,2843275721&fm=76) no-repeat}
+  .c2{background:url(https://f12.baidu.com/it/u=2044876853,1856196688&fm=76) no-repeat}
+  .a3{background:url(https://t12.baidu.com/it/u=721497938,2484151604&fm=76) no-repeat}
+  .b3{background:url(https://t12.baidu.com/it/u=258330515,4053316423&fm=76) no-repeat}
+  .c3{background:url(https://t11.baidu.com/it/u=181418956,1818712927&fm=76) no-repeat}
   </style>
  </head>
 
@@ -72,33 +72,38 @@
     function move(e){
       if(!drag)return;
       if(!e.touches)e.touches=[{pageX:e.pageX, pageY:e.pageY}];
-      offsetx+=(e.touches[0].pageX - mousex);
-      offsety+=(e.touches[0].pageY - mousey);
-      mousex=e.touches[0].pageX;
-      mousey=e.touches[0].pageY;
+      offsetx=(e.touches[0].pageX - mousex);
+      offsety=(e.touches[0].pageY - mousey);
+      //mousex=e.touches[0].pageX;
+      //mousey=e.touches[0].pageY;
     }
     function end(e){
      drag=false;
      if(!e.touches)e.touches=[{pageX:e.pageX, pageY:e.pageY}];
+     //alert(1);
      if(offsetx>threshold && startx<=-6){
+      //document.title='slide right'
       startx+=6;
       wrap.style.transform='translate3d('+startx+'rem,'+starty+'rem,0)'
       wrap.style.webkitTransform='translate3d('+startx+'rem,'+starty+'rem,0)'
       return;
      }
      if(offsetx<-threshold && startx>=-6){
+      //document.title='slide left'
       startx-=6;
       wrap.style.transform='translate3d('+startx+'rem,'+starty+'rem,0)'
       wrap.style.webkitTransform='translate3d('+startx+'rem,'+starty+'rem,0)'
       return;
      }
      if(offsety>threshold && starty<=-3.2){
+      //document.title='slide down'
       starty+=3.2;
       wrap.style.transform='translate3d('+startx+'rem,'+starty+'rem,0)'
       wrap.style.webkitTransform='translate3d('+startx+'rem,'+starty+'rem,0)'
       return;
      }
      if(offsety<-threshold && starty>=-3.2){
+      //document.title='slide top'
       starty-=3.2;
       wrap.style.transform='translate3d('+startx+'rem,'+starty+'rem,0)'
       wrap.style.webkitTransform='translate3d('+startx+'rem,'+starty+'rem,0)'
@@ -107,24 +112,23 @@
     }
     if('ontouchstart' in window){
       wrap.addEventListener('touchstart', function(e){
-        start(e)
+        start(e);
       })
-      wrap.addEventListener('touchmove', function(e){
-        move(e)
+      document.body.addEventListener('touchmove', function(e){
+        move(e);
       })
-      wrap.addEventListener('touchend', function(e){
-        end(e)
+      document.body.addEventListener('touchend', function(e){
+        end(e);
       })
     }else{
       wrap.addEventListener('mousedown', function(e){
-        
-        start(e)
+        start(e);
       })
-      wrap.addEventListener('mousemove', function(e){
-        move(e)
+      document.body.addEventListener('mousemove', function(e){
+        move(e);
       })
-      wrap.addEventListener('mouseup', function(e){
-        end(e)
+      document.body.addEventListener('mouseup', function(e){
+        end(e);
       })
     }
   
