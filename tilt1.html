@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> tilt </title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <style>
+  html,body{width:100%;height:100%;touch-action:none;}
+  html{font-size:15.625vw}
+  * {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    outline: none;
+  }
+  
+  .container{width:6.4rem;height:3.2rem;position:relative;}
+  .left{position:absolute;left:0;top:0;width:0.4rem;height:100%;background:blue;z-index:1}
+  .right{position:absolute;left:0.4rem;top:0;width:6rem;height:3.2rem;overflow:hidden}
+  .wrap{width:18rem;height:6.4rem;transform:translate3d(-6rem,-3.2rem,0);-webkit-transform:translate3d(-6rem,-3.2rem,0);}
+  .row{width:18rem;height:3.2rem;}
+  .row>div{width:6rem;height:3.2rem;display:inline-block;background-size:100%}
+  .a1{background:url(https://t12.baidu.com/it/u=721497938,2484151604&fm=76) no-repeat}
+  .b1{background:url(https://t12.baidu.com/it/u=258330515,4053316423&fm=76) no-repeat}
+  .c1{background:url(https://t11.baidu.com/it/u=181418956,1818712927&fm=76) no-repeat}
+  .a2{background:url(https://f11.baidu.com/it/u=522930220,3719454270&fm=76) no-repeat}
+  .b2{background:url(https://f11.baidu.com/it/u=1982326384,2843275721&fm=76) no-repeat}
+  .c2{background:url(https://f12.baidu.com/it/u=2044876853,1856196688&fm=76) no-repeat}
+  .a3{background:url(https://t12.baidu.com/it/u=721497938,2484151604&fm=76) no-repeat}
+  .b3{background:url(https://t12.baidu.com/it/u=258330515,4053316423&fm=76) no-repeat}
+  .c3{background:url(https://t11.baidu.com/it/u=181418956,1818712927&fm=76) no-repeat}
+  </style>
+ </head>
+
+ <body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="right">
+      <div class="wrap" id="wrap">
+        <div class="row"><div class="a1">A1</div><div class="b1">B1</div><div class="c1">C1</div></div>
+        <div class="row"><div class="a2">A2</div><div class="b2">B2</div><div class="c2">C2</div></div>
+        <div class="row"><div class="a3">A3</div><div class="b3">B3</div><div class="c3">C3</div></div>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript">
+<!--
+tween=(function(){
+  var sin=Math.sin;
+  var cos=Math.cos;
+  var floor=Math.floor;
+  var pi=Math.PI;
+  var sqrt=Math.sqrt;
+  var tan=Math.tan;
+  var abs=Math.abs;
+  var asin=Math.asin;
+  var tween = {
+    linear: function(t, b, c, d) { return c*t/d + b; },
+    quad: {
+      easeIn: function(t, b, c, d) {
+        return c * (t /= d) * t + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return -c *(t /= d)*(t-2) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if ((t /= d / 2) < 1) return c / 2 * t * t + b;
+        return -c / 2 * ((--t) * (t-2) - 1) + b;
+      }
+    },
+    cubic: {
+      easeIn: function(t, b, c, d) {
+        return c * (t /= d) * t * t + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return c * ((t = t/d - 1) * t * t + 1) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if ((t /= d / 2) < 1) return c / 2 * t * t*t + b;
+        return c / 2*((t -= 2) * t * t + 2) + b;
+      }
+    },
+    quart: {
+      easeIn: function(t, b, c, d) {
+        return c * (t /= d) * t * t*t + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return -c * ((t = t/d - 1) * t * t*t - 1) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t + b;
+        return -c / 2 * ((t -= 2) * t * t*t - 2) + b;
+      }
+    },
+    quint: {
+      easeIn: function(t, b, c, d) {
+        return c * (t /= d) * t * t * t * t + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return c * ((t = t/d - 1) * t * t * t * t + 1) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
+        return c / 2*((t -= 2) * t * t * t * t + 2) + b;
+      }
+    },
+    sine: {
+      easeIn: function(t, b, c, d) {
+        return -c * cos(t/d * (pi/2)) + c + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return c * sin(t/d * (pi/2)) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        return -c / 2 * (cos(pi * t/d) - 1) + b;
+      }
+    },
+    expo: {
+      easeIn: function(t, b, c, d) {
+        return (t==0) ? b : c * pow(2, 10 * (t/d - 1)) + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return (t==d) ? b + c : c * (-pow(2, -10 * t/d) + 1) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if (t==0) return b;
+        if (t==d) return b+c;
+        if ((t /= d / 2) < 1) return c / 2 * pow(2, 10 * (t - 1)) + b;
+        return c / 2 * (-pow(2, -10 * --t) + 2) + b;
+      }
+    },
+    circ: {
+      easeIn: function(t, b, c, d) {
+        return -c * (sqrt(1 - (t /= d) * t) - 1) + b;
+      },
+      easeOut: function(t, b, c, d) {
+        return c * sqrt(1 - (t = t/d - 1) * t) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+        if ((t /= d / 2) < 1) return -c / 2 * (sqrt(1 - t * t) - 1) + b;
+        return c / 2 * (sqrt(1 - (t -= 2) * t) + 1) + b;
+      }
+    },
+    elastic: {
+      easeIn: function(t, b, c, d, a, p) {
+        var s;
+        if (t==0) return b;
+        if ((t /= d) == 1) return b + c;
+        if (typeof p == "undefined") p = d * .3;
+        if (!a || a < abs(c)) {
+          s = p / 4;
+          a = c;
+        } else {
+          s = p / (2 * pi) * asin(c / a);
+        }
+        return -(a * pow(2, 10 * (t -= 1)) * sin((t * d - s) * (2 * pi) / p)) + b;
+      },
+      easeOut: function(t, b, c, d, a, p) {
+        var s;
+        if (t==0) return b;
+        if ((t /= d) == 1) return b + c;
+        if (typeof p == "undefined") p = d * .3;
+        if (!a || a < abs(c)) {
+          a = c; 
+          s = p / 4;
+        } else {
+          s = p/(2*pi) * asin(c/a);
+        }
+        return (a * pow(2, -10 * t) * sin((t * d - s) * (2 * pi) / p) + c + b);
+      },
+      easeInOut: function(t, b, c, d, a, p) {
+        var s;
+        if (t==0) return b;
+        if ((t /= d / 2) == 2) return b+c;
+        if (typeof p == "undefined") p = d * (.3 * 1.5);
+        if (!a || a < abs(c)) {
+          a = c; 
+          s = p / 4;
+        } else {
+          s = p / (2  *pi) * asin(c / a);
+        }
+        if (t < 1) return -.5 * (a * pow(2, 10* (t -=1 )) * sin((t * d - s) * (2 * pi) / p)) + b;
+        return a * pow(2, -10 * (t -= 1)) * sin((t * d - s) * (2 * pi) / p ) * .5 + c + b;
+      }
+    },
+    back: {
+      easeIn: function(t, b, c, d, s) {
+        if (typeof s == "undefined") s = 1.70158;
+        return c * (t /= d) * t * ((s + 1) * t - s) + b;
+      },
+      easeOut: function(t, b, c, d, s) {
+        if (typeof s == "undefined") s = 1.70158;
+        return c * ((t = t/d - 1) * t * ((s + 1) * t + s) + 1) + b;
+      },
+      easeInOut: function(t, b, c, d, s) {
+        if (typeof s == "undefined") s = 1.70158; 
+        if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
+        return c / 2*((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+      }
+    },
+    bounce: {
+      easeIn: function(t, b, c, d) {
+        return c - tween.bounce.easeOut(d-t, 0, c, d) + b;
+      },
+      easeOut: function(t, b, c, d) {
+        if ((t /= d) < (1 / 2.75)) {
+          return c * (7.5625 * t * t) + b;
+        } else if (t < (2 / 2.75)) {
+          return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b;
+        } else if (t < (2.5 / 2.75)) {
+          return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b;
+        } else {
+          return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b;
+        }
+      },
+      easeInOut: function(t, b, c, d) {
+        if (t < d / 2) {
+          return tween.bounce.easeIn(t * 2, 0, c, d) * .5 + b;
+        } else {
+          return tween.bounce.easeOut(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
+        }
+      }
+    }
+  }
+  return tween;
+}())
+
+//-->
+</script>
+<script type="text/javascript">
+<!--
+  (function(){
+    //alert(document.documentElement.clientWidth)
+    var wrap=document.querySelector('#wrap');
+    var drag=false;
+    var startPos={
+      x:-6,
+      y:-3.2
+    };
+    var endPos={
+      x:-6,
+      y:-3.2
+    }
+    var mousex=0;
+    var mousey=0;
+    var offsetx=0;
+    var offsety=0;
+    var threshold=50;
+    var transitioning=false;
+    var counts=0;
+    var during=50;
+    var tweening=0;
+    var timer;
+    var processing=false;
+    function handleOrientation(e){
+      var gamma=e.gamma;//[-90, 90]
+      var beta=e.beta;//[-180, 180]
+      if(processing)return
+      processing=true;
+      setTimeout(function(){
+        processing=false;
+        if(tweening)return;
+        if(Math.abs(gamma)>20){
+          tweening=1;
+          counts=0;
+          if(gamma>10){
+            if(startPos.x==-12){
+              tweening=0;
+              counts=0;
+              return;
+            }
+            endPos.x-=6;
+          }else{
+            if(startPos.x==0){
+              tweening=0;
+              counts=0;
+              return;
+            }
+            endPos.x+=6;
+          }
+          return;
+        }
+
+        if(beta-90<-20){
+          counts=0;
+          tweening=1;
+          if(startPos.y==0){
+            tweening=0;
+            return;
+          }
+          endPos.y+=3.2;
+          return;
+        }
+        if(beta-90>5){
+          counts=0;
+          tweening=1;
+          if(startPos.y==-6.4){
+            tweening=0;
+            return;
+          }
+          endPos.y-=3.2;
+        }
+      },200)
+    }
+    window.addEventListener('deviceorientation', handleOrientation);
+    function moving(){
+      if(!tweening)return;
+      if(counts<during){
+        counts++;
+        var x = tween.quad.easeOut(counts, startPos.x, endPos.x-startPos.x, during);
+        var y = tween.quad.easeOut(counts, startPos.y, endPos.y-startPos.y, during);
+        wrap.style.transform='translate3d('+x+'rem,'+y+'rem,0)'
+        wrap.style.webkitTransform='translate3d('+x+'rem,'+y+'rem,0)'
+      }else{
+        startPos.x=endPos.x;
+        startPos.y=endPos.y;
+        counts=0;
+        tweening = 0;
+      }
+    }
+    function animation(){
+      moving()
+      timer=requestAnimationFrame(animation)
+    }
+    animation()
+
+  
+  }())
+//-->
+</script>
+ </body>
+</html>
