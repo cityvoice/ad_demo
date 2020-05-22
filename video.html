@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> new document </title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+  <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+  <style>
+  html,body{width:100%;height:100%;touch-action:none}
+  * {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    outline: none;
+  }
+  </style>
+ </head>
+
+ <body>
+<!--   <video src="300x25.mp4" x5-video-player-fullscreen="true" x-webkit-airplay="allow" webkit-playsinline playsinline preload muted autoplay></video> -->
+
+  <div id="container"></div>
+  <script type="text/javascript">
+  <!--
+  
+  function createVideo(){
+    var player=document.createElement('video');
+    player.src='300x25.mp4';
+    player.setAttribute('muted','');
+    player.setAttribute('preload','');
+    player.setAttribute('playsinline','');
+    //player.setAttribute('autoplay','');
+    //player.setAttribute('x5-video-player-typ','h5');
+    return player
+  
+  }
+  var container=document.getElementById('container');
+  var video=createVideo();
+  container.appendChild(video);
+  //video.play();
+  
+  wx.config({ //这里接入微信sdk 配置信息，对错无所谓。为什么 后面讲
+    // 配置信息, 即使不正确也能使用 wx.ready
+    debug: false,
+    appId: "wx630c9549543ce51f",
+    timestamp: 1,
+    nonceStr: "",
+    signature: "",
+    jsApiList: []
+  });
+  //var video=document.querySelector('video');
+    video.addEventListener('durationchange', function(){
+      alert('video length: '+video.duration);
+    });
+    video.addEventListener('canplay', function(){
+      alert('video length: '+video.duration);
+    });
+    
+    //video.play();
+    wx.ready(function(){
+      //video.click();
+      video.play();
+    });
+
+  //-->
+  </script>
+ </body>
+</html>
